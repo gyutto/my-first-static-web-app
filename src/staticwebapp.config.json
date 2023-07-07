@@ -1,38 +1,24 @@
 {
-    "$schema": "https://json.schemastore.org/staticwebapp.config.json" ,
-    "auth": {
-      "identityProviders": {
-        "azureActiveDirectory": {
-          "registration": {
-            "openIdIssuer": "https://login.microsoftonline.com/b172ed6a-ffdc-4d2b-8a71-f92834597dd6",
-            "clientIdSettingName": "AAD_ClientID",
-            "clientSecretSettingName": "AAD_Client_Secret"
-          }
-        }
+  "routes": [
+      {
+          "route": "/*",
+          "allowedRoles": [
+              "authenticated"
+          ]
+      },
+      {
+          "route": "/.auth/login/twitter",
+          "statusCode": 404
+      },
+      {
+          "route": "/.auth/login/github",
+          "statusCode": 404
       }
-    },
-    "routes": [
-      {
-        "route": "/login",
-        "redirect": "/.auth/login/aad"
-      },
-      {
-        "route": "/logout",
-        "redirect": "/.auth/logout"
-      },
-      {
-        "route": "/.auth/login/aad/callback",
-        "redirect": "/"
-      },
-      {
-        "route": "/*",
-        "allowedRoles": ["authenticated"]
-      }
-    ],
-    "responseOverrides": {
+  ],
+  "responseOverrides": {
       "401": {
-        "redirect": "/login",
-        "statusCode": 302
+          "statusCode": 302,
+          "redirect": "/.auth/login/aad"
       }
-    }
   }
+}
